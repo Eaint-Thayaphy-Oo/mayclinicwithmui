@@ -1,0 +1,41 @@
+.container {
+  background-color: #fff;
+  margin: 20px;
+  position: relative;
+  height: 100vh;
+}
+
+.block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.firstblock {
+  padding: 20px;
+}
+
+.header {
+  font-style: Poppins;
+  font-size: 22px;
+  font-weight: Semibold;
+  color: #54bab9;
+  margin-bottom: 20px;
+}
+
+.select {
+  margin-top: 10px;
+}
+
+.plus {
+  margin-right: 10px;
+}
+
+.p {
+  margin-top: 10px;
+  margin-left: 5px;
+  font-style: Poppins;
+  font-size: 14px;
+  font-weight: regular;
+  color: #000000;
+}

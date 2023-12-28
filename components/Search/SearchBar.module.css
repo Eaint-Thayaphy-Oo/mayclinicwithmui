@@ -1,0 +1,10 @@
+.TextField {
+  width: 100px;
+}
+
+.icon {
+  position: absolute;
+  inset: 75px;
+  color: #54bab9;
+  margin-left: 160px;
+}
