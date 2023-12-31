@@ -1,10 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import styles from "./Body.module.css";
 import SearchBar from "../Search/SearchBar";
-import { FaPlus } from "react-icons/fa";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import List from "../List/List";
+import Create from "../Create/Create";
+import { FaPlus } from "react-icons/fa";
+import { TextField, Button } from "@mui/material";
 
 const status = [
   { value: "all", label: "Status All" },
@@ -26,6 +28,19 @@ const rows = [
 ];
 
 export default function Body() {
+  const [showForm, setShowForm] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const showFormHandler = () => {
+    setShowForm(!showForm);
+  };
+
+  const addUserHandler = (user) => {
+    const newUsers = [user, ...users];
+    setUsers(newUsers);
+    setShowForm(!showForm);
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -89,6 +104,7 @@ export default function Body() {
                 border: "1px solid #54bab9",
                 height: "30px",
               }}
+              onClick={showFormHandler}
             >
               <FaPlus className={styles.plus} />
               Add new patient
@@ -119,6 +135,7 @@ export default function Body() {
           </div>
         </div>
         <List />
+        {showForm && <Create addUser={addUserHandler} />}
       </div>
     </>
   );

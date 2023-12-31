@@ -14,12 +14,12 @@ export default function SearchBar() {
           style: {
             borderRadius: "30px",
             height: "30px",
-            width:"110%",
+            width: "110%",
             border: "1px solid rgba(68, 68, 68, 0.5)",
           },
         }}
       />
-      <CiSearch className={styles.icon}/>
+      <CiSearch className={styles.icon} />
     </div>
   );
 }

@@ -1,0 +1,77 @@
+.modalblock {
+  width: 550px;
+  background-color: #fff;
+  position: absolute;
+  margin-left: 400px;
+  border-radius: 20px;
+  top: 150px;
+}
+
+.text {
+  text-align: center;
+  font-style: Poppins;
+  font-size: 18px;
+  font-weight: medium;
+  color: #54bab9;
+  margin-bottom: 10px;
+  margin-top: 50px;
+}
+
+.textone {
+  font-style: Poppins;
+  font-size: 12px;
+  font-weight: regular;
+  color: #444444;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.blockone {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 50px;
+}
+
+.blocktwo,
+.blockthree {
+  width: 200px;
+}
+
+.label {
+  font-style: Poppins;
+  font-size: 12px;
+  font-weight: regular;
+  color: #444444;
+}
+
+.image {
+  position: absolute;
+  inset: 240px;
+  margin-top: 170px;
+}
+
+.imageone {
+  position: absolute;
+  inset: 145px;
+  margin-left: 350px;
+  margin-top: 50px;
+}
+
+.imagetwo {
+  position: absolute;
+  inset: 145px;
+  margin-left: 350px;
+  margin-top: 100px;
+}
+
+.imagethree {
+  position: absolute;
+  inset: 145px;
+  margin-left: 350px;
+  margin-top: 277px;
+}
+
+.button {
+  text-align: center;
+}
