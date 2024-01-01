@@ -15,12 +15,27 @@ import {
 import { AiOutlineMore } from "react-icons/ai";
 import { LuPencil } from "react-icons/lu";
 import { FiTrash } from "react-icons/fi";
+import Edit from "../../components/Edit/Edit";
+
+export interface DataType {
+  id: number;
+  name: string;
+  status: string;
+  pawrent: string;
+  breed: string;
+  gender: string;
+  birth: number;
+  phone: number;
+  address: string;
+  township?: string;
+  city?: string;
+}
 
 export default function List() {
   const [data, setData] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [selectedData, setSelectedData] = useState();
+  const [selectedData, setSelectedData] = useState<DataType>();
   const [showDropDown, setShowDropDown] = useState();
 
   const handleSelectAll = () => {
@@ -39,7 +54,7 @@ export default function List() {
         setData(items);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   const handleOpenModal = (id) => {
     if (id == showDropDown) {
@@ -66,168 +81,170 @@ export default function List() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Checkbox
-                checked={selectAll}
-                onChange={handleSelectAll}
-                inputProps={{ "aria-label": "Select All" }}
-              />
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              ID
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Name
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Status
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Pawrent
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Breed
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Gender
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Date of Birth
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Contact Phone No.
-            </TableCell>
-            <TableCell
-              sx={{
-                fontStyle: "Poppins",
-                fontSize: "14px",
-                fontWeight: "semibold",
-                color: "#54bab9",
-              }}
-            >
-              Address
-            </TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            data.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>
-                  <Checkbox
-                    checked={selectAll}
-                    onChange={() => handleSelectItem(item.id)}
-                    inputProps={{ "aria-label": `Select Item ${item.id}` }}
-                  />
-                </TableCell>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.status}</TableCell>
-                <TableCell>{item.pawrent}</TableCell>
-                <TableCell>{item.breed}</TableCell>
-                <TableCell>{item.gender}</TableCell>
-                <TableCell>{item.birth}</TableCell>
-                <TableCell>{item.phone}</TableCell>
-                <TableCell>
-                  {item.address},{item.city},{item.township}.
-                </TableCell>
-                <TableCell
-                  className={styles.modalId}
-                  onClick={() => handleOpenModal(item?.id)}
-                >
-                  <AiOutlineMore />
-                  {showDropDown === item?.id && (
-                    <div className={styles.modal}>
-                      <button
-                        className={styles.button}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setEditModal(true);
-                          // setSelectedId(item.id);
-                          setSelectedData(item);
-                        }}
-                      >
-                        <LuPencil className={styles.pencil} />
-                        Edit
-                      </button>
-                      <br />
-                      <button
-                        className={styles.button}
-                        onClick={() => {
-                          Removefunction(item.id);
-                        }}
-                      >
-                        <FiTrash className={styles.delete} />
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Checkbox
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                  inputProps={{ "aria-label": "Select All" }}
+                />
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                ID
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Name
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Status
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Pawrent
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Breed
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Gender
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Date of Birth
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Contact Phone No.
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "semibold",
+                  color: "#54bab9",
+                }}
+              >
+                Address
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data &&
+              data.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectAll}
+                      onChange={() => handleSelectItem(item.id)}
+                      inputProps={{ "aria-label": `Select Item ${item.id}` }}
+                    />
+                  </TableCell>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.status}</TableCell>
+                  <TableCell>{item.pawrent}</TableCell>
+                  <TableCell>{item.breed}</TableCell>
+                  <TableCell>{item.gender}</TableCell>
+                  <TableCell>{item.birth}</TableCell>
+                  <TableCell>{item.phone}</TableCell>
+                  <TableCell>
+                    {item.address},{item.city},{item.township}.
+                  </TableCell>
+                  <TableCell
+                    className={styles.modalId}
+                    onClick={() => handleOpenModal(item?.id)}
+                  >
+                    <AiOutlineMore />
+                    {showDropDown === item?.id && (
+                      <div className={styles.modal}>
+                        <button
+                          className={styles.button}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditModal(true);
+                            setSelectedData(item);
+                          }}
+                        >
+                          <LuPencil className={styles.pencil} />
+                          Edit
+                        </button>
+                        <br />
+                        <button
+                          className={styles.button}
+                          onClick={() => {
+                            Removefunction(item.id);
+                          }}
+                        >
+                          <FiTrash className={styles.delete} />
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {editModal == true ? <Edit item={selectedData} /> : null}
+    </>
   );
 }

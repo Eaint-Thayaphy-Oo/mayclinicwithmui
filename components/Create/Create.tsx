@@ -12,11 +12,18 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-export default function Create(props) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export default function Create({props}) {
   // console.log("create form", props);
   const [name, setName] = useState("");
   const [pawrent, setPawrent] = useState("");
@@ -31,9 +38,9 @@ export default function Create(props) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleCancel = () => {
+  //   setOpen(false);
+  // };
 
   const handleDateChange = (date) => {
     setBirth(date);
@@ -66,11 +73,25 @@ export default function Create(props) {
       .then((data) => {
         setOpen(true);
         setMessage("Saved successfully.");
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err.message);
       });
+  };
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -286,31 +307,38 @@ export default function Create(props) {
               </div>
             </div>
           </div>
-          <div className={styles.button}>
+
+          <Stack spacing={2} sx={{ width: "100%", marginLeft: "170px" }}>
             <Button
               type="submit"
               variant="contained"
+              onClick={handleClick}
               sx={{
                 width: "100px",
-                marginRight: "10px",
                 border: "1px solid #54bab9",
                 backgroundColor: "#54bab9",
               }}
             >
               Save
             </Button>
-            <Button variant="outlined" sx={{ color: "#000000" }}>
-              Cancel
-            </Button>
-          </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Patient is successfully created!
+              </Alert>
+            </Snackbar>
+          </Stack>
+          <Button
+            variant="outlined"
+            sx={{ color: "#000000", marginLeft: "280px" }}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Alert severity="success" onClose={handleClose} open={open}>
-          <AlertTitle>Success</AlertTitle>
-          {message}
-        </Alert>
-      </Stack>
     </form>
   );
 }
