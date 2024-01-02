@@ -54,7 +54,12 @@
     },
     {
       "id": 7,
-      "name": "aye aye "
+      "name": "aye aye  update",
+      "pawrent": "hello",
+      "gender": "male",
+      "phone": "094617823678",
+      "status": "allergy",
+      "breed": "golden"
     },
     {
       "name": "jelly ",
@@ -71,7 +76,8 @@
     },
     {
       "id": 9,
-      "name": "jo jo testing tesign"
+      "name": "jo jo testing tesign",
+      "status": "beagle"
     },
     {
       "name": "testing",
@@ -280,6 +286,14 @@
       "address": "",
       "township": "",
       "id": 25
+    },
+    {
+      "id": 26,
+      "name": "",
+      "pawrent": "",
+      "gender": "",
+      "phone": "",
+      "city": "yangon"
     }
   ]
 }
