@@ -39,3 +39,8 @@
   font-weight: regular;
   color: #000000;
 }
+
+.pagination {
+  margin-top: 50px;
+  text-align: center;
+}

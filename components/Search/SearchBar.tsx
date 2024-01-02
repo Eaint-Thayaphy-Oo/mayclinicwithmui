@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { CiSearch } from "react-icons/ci";
 import styles from "./SearchBar.module.css";
 
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
+  const [query, setQuery] = useState("");
+
+  const handleSearch = () => {
+    onSearch(query);
+  };
+
   return (
     <div>
       <TextField
@@ -18,8 +24,10 @@ export default function SearchBar() {
             border: "1px solid rgba(68, 68, 68, 0.5)",
           },
         }}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
-      <CiSearch className={styles.icon} />
+      <CiSearch className={styles.icon} onClick={handleSearch} />
     </div>
   );
 }

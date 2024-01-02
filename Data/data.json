@@ -1,19 +1,6 @@
 {
   "items": [
     {
-      "id": 1,
-      "name": "Milo",
-      "status": "allergy",
-      "pawrent": "aye aye",
-      "breed": "beagle",
-      "gender": "male",
-      "birth": "2021-12-06",
-      "phone": "09123456",
-      "address": "no13,insein",
-      "township": "yangon",
-      "city": "yangon"
-    },
-    {
       "id": 2,
       "name": "Mj",
       "status": "picky",
@@ -83,19 +70,6 @@
       "status": "beagle"
     },
     {
-      "name": "hiihi",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 13
-    },
-    {
       "name": "jifhuier",
       "pawrent": "",
       "gender": "",
@@ -107,19 +81,6 @@
       "address": "",
       "township": "",
       "id": 14
-    },
-    {
-      "name": "jijii",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 15
     },
     {
       "name": "ggg",
@@ -226,17 +187,17 @@
       "id": 24
     },
     {
+      "id": 25,
       "name": "333",
       "pawrent": "",
-      "gender": "",
+      "gender": "female",
       "phone": "",
       "city": "",
       "status": "",
       "breed": "",
       "birth": "",
       "address": "",
-      "township": "",
-      "id": 25
+      "township": ""
     },
     {
       "id": 26,
@@ -297,6 +258,32 @@
       "address": "no.90",
       "township": "Shan",
       "id": 34
+    },
+    {
+      "id": 35,
+      "name": "erwre",
+      "pawrent": "tret",
+      "gender": "male",
+      "phone": "2324",
+      "city": "yangon",
+      "status": "allergy",
+      "breed": "beagle",
+      "birth": "2024-01-02T17:30:00.000Z",
+      "address": "no",
+      "township": "yangon"
+    },
+    {
+      "name": "",
+      "pawrent": "",
+      "gender": "",
+      "phone": "",
+      "city": "",
+      "status": "",
+      "breed": "",
+      "birth": "",
+      "address": "",
+      "township": "",
+      "id": 36
     }
   ]
 }

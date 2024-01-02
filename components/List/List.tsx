@@ -42,8 +42,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function List() {
+export default function List({ datashow, searchByFilter }) {
   const [data, setData] = useState(null);
+  const [items, setItems] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [selectedData, setSelectedData] = useState<DataType>();
@@ -65,6 +66,7 @@ export default function List() {
       .then((res) => res.json())
       .then((items) => {
         setData(items);
+        setItems(items);
       })
       .catch((err) => console.log(err));
   }, [data]);
@@ -107,6 +109,30 @@ export default function List() {
   const handleSnackbarClose = () => {
     setOpen(false);
   };
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/items")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((resp) => {
+  //       setData(resp);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    if (datashow) {
+      setData(datashow);
+    } else if (searchByFilter) {
+      setData(searchByFilter);
+    } else {
+      setData([]);
+    }
+  }, [datashow, searchByFilter]);
+  console.log(data);
 
   return (
     <>
@@ -215,8 +241,8 @@ export default function List() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
-              data.map((item) => (
+            {items &&
+              items.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
                     <Checkbox
@@ -255,7 +281,7 @@ export default function List() {
                           Edit
                         </button>
                         <br />
-                        <Stack>
+                        <Stack sx={{ marginRight: "15px" }}>
                           <button
                             className={styles.button}
                             onClick={() => {

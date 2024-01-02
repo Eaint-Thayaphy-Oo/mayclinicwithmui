@@ -30,6 +30,18 @@ const rows = [
 export default function Body() {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
+  const [data,setData] = useState(null)
+  const [items, setItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [breedFilter, setBreedFilter] = useState("all");
+  const [pets, setPets] = useState([]);
+
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedItems = filteredItems.slice(startIndex, endIndex);
 
   const showFormHandler = () => {
     setShowForm(!showForm);
@@ -41,6 +53,43 @@ export default function Body() {
     setShowForm(!showForm);
   };
 
+  //search
+  useEffect(() => {
+    fetch("http://localhost:8000/items")
+      .then((response) => response.json())
+      .then((data) => {
+        setItems(data);
+        setFilteredItems(data);
+        setPets(data);
+      });
+  }, []);
+
+  const handleSearch = (query) => {
+    const searchFields = [
+      "name",
+      "pawrent",
+      "gender",
+      "birth",
+      "phone",
+      "address",
+      "township",
+    ];
+    const filtered = items.filter((item) =>
+      searchFields.some(
+        (field) =>
+          item[field] && item[field].toLowerCase().includes(query.toLowerCase())
+      )
+    );
+    setFilteredItems(filtered);
+  };
+
+  //searchbyfilter
+  const filteredPets = pets.filter((pet) => {
+    return (
+      (statusFilter === "all" || pet.status === statusFilter) &&
+      (breedFilter === "all" || pet.breed === breedFilter)
+    );
+  });
   return (
     <>
       <div className={styles.container}>
@@ -48,7 +97,7 @@ export default function Body() {
           <div className={styles.firstblock}>
             <div>
               <h2 className={styles.header}>Patient List</h2>
-              <SearchBar />
+              <SearchBar onSearch={handleSearch} />
             </div>
             <div className={styles.select}>
               <TextField
@@ -64,6 +113,8 @@ export default function Body() {
                   },
                 }}
                 helperText=""
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
               >
                 {status.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -84,6 +135,8 @@ export default function Body() {
                   },
                 }}
                 helperText=""
+                value={breedFilter}
+                onChange={(e) => setBreedFilter(e.target.value)}
               >
                 {breed.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -124,6 +177,8 @@ export default function Body() {
                   },
                 }}
                 helperText=""
+                value={rowsPerPage}
+                onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
               >
                 {rows.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -134,8 +189,23 @@ export default function Body() {
             </h4>
           </div>
         </div>
-        <List />
+        <List datashow={displayedItems} searchByFilter={filteredPets} />
         {showForm && <Create addUser={addUserHandler} />}
+        <div className={styles.pagination}>
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous Page
+          </button>
+          <span>{`Page ${currentPage}`}</span>
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={endIndex >= filteredItems.length}
+          >
+            Next Page
+          </button>
+        </div>
       </div>
     </>
   );
