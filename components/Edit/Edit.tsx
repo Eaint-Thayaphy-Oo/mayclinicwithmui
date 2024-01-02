@@ -44,6 +44,13 @@ const city = [
   { value: "tarmwae", label: "Tarmwae" },
 ];
 
+const township = [
+  { value: "all", label: "Status All" },
+  { value: "yangon", label: "Yangon" },
+  { value: "mandalay", label: "Mandalay" },
+  { value: "Shan", label: "Shan" },
+];
+
 export default function Edit({ item }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -94,10 +101,10 @@ export default function Edit({ item }) {
     }));
   };
 
-  const handleBirthChange = (e) => {
+  const handleBirthChange = (date) => {
     setEditedValues((prevValues) => ({
       ...prevValues,
-      birth: e.target.value,
+      birth: date,
     }));
   };
 
@@ -326,18 +333,65 @@ export default function Edit({ item }) {
                       <DatePicker
                         name="birth"
                         value={dayjs(editedValues.birth)}
-                        onChange={handleInputChange}
+                        onChange={(date) => handleBirthChange(date)}
                         sx={{
                           width: "220px",
-                          height:"30px",
                         }}
                       />
                     </LocalizationProvider>
                   </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Address</label>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      name="address"
+                      InputProps={{
+                        style: {
+                          borderRadius: "5px",
+                          height: "30px",
+                          width: "110%",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      value={editedValues.address}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Township</label>
+                    <TextField
+                      id="outlined-select-currency-native"
+                      name="township"
+                      select
+                      SelectProps={{
+                        native: true,
+                        sx: {
+                          height: "30px",
+                          width: "220px",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      helperText=""
+                      value={editedValues.township}
+                      onChange={handleInputChange}
+                    >
+                      {township.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </TextField>
+                  </div>
                 </div>
               </div>
               <Stack
-                sx={{ width: "100%", display: "flex", flexDirection: "row" }}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "180px",
+                }}
               >
                 <Button
                   type="submit"
@@ -358,6 +412,7 @@ export default function Edit({ item }) {
                   sx={{
                     color: "#000000",
                     width: "100px",
+                    marginLeft: "10px",
                   }}
                 >
                   Cancel
