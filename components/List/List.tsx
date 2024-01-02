@@ -11,11 +11,15 @@ import {
   TableRow,
   Paper,
   Checkbox,
+  Button,
 } from "@mui/material";
 import { AiOutlineMore } from "react-icons/ai";
 import { LuPencil } from "react-icons/lu";
 import { FiTrash } from "react-icons/fi";
 import Edit from "../../components/Edit/Edit";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 export interface DataType {
   id: number;
@@ -31,19 +35,28 @@ export interface DataType {
   city?: string;
 }
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function List() {
   const [data, setData] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [selectedData, setSelectedData] = useState<DataType>();
   const [showDropDown, setShowDropDown] = useState();
+  const [open, setOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
+  const [message, setMessage] = useState("");
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
   };
 
   const handleSelectItem = (itemId) => {
-    // Implement your logic to handle individual item selection here
     console.log(`Selected item with ID: ${itemId}`);
   };
 
@@ -54,7 +67,7 @@ export default function List() {
         setData(items);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [data]);
 
   const handleOpenModal = (id) => {
     if (id == showDropDown) {
@@ -65,19 +78,34 @@ export default function List() {
   };
 
   const Removefunction = (id) => {
-    // console.log(id);
-    if (window.confirm("Do you want to remove?")) {
+    if (window.confirm("Are you sure you want to delete this patient?")) {
       fetch("http://localhost:8000/items/" + id, {
         method: "DELETE",
       })
         .then((res) => {
-          alert("Removed successfully.");
-          window.location.reload();
+          setOpen(true);
+          setModalVisible(false);
+          setMessage("Patient is successfully deleted!");
         })
         .catch((err) => {
           console.log(err.message);
         });
     }
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleSnackbarClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -227,15 +255,17 @@ export default function List() {
                           Edit
                         </button>
                         <br />
-                        <button
-                          className={styles.button}
-                          onClick={() => {
-                            Removefunction(item.id);
-                          }}
-                        >
-                          <FiTrash className={styles.delete} />
-                          Delete
-                        </button>
+                        <Stack>
+                          <button
+                            className={styles.button}
+                            onClick={() => {
+                              Removefunction(item.id);
+                            }}
+                          >
+                            <FiTrash className={styles.delete} />
+                            Delete
+                          </button>
+                        </Stack>
                       </div>
                     )}
                   </TableCell>
@@ -245,6 +275,15 @@ export default function List() {
         </Table>
       </TableContainer>
       {editModal == true ? <Edit item={selectedData} /> : null}
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

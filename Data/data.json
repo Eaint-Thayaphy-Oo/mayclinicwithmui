@@ -79,46 +79,8 @@
     {
       "id": 9,
       "name": "jo jo testing tesign",
+      "gender": "female",
       "status": "beagle"
-    },
-    {
-      "name": "testing",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 10
-    },
-    {
-      "name": "lkjgkh",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 11
-    },
-    {
-      "name": "hiihi",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 12
     },
     {
       "name": "hiihi",
@@ -158,19 +120,6 @@
       "address": "",
       "township": "",
       "id": 15
-    },
-    {
-      "name": "yuuu",
-      "pawrent": "",
-      "gender": "",
-      "phone": "",
-      "city": "",
-      "status": "",
-      "breed": "",
-      "birth": "",
-      "address": "",
-      "township": "",
-      "id": 16
     },
     {
       "name": "ggg",
@@ -296,6 +245,58 @@
       "gender": "",
       "phone": "",
       "city": "yangon"
+    },
+    {
+      "name": "testing",
+      "pawrent": "testing",
+      "gender": "female",
+      "phone": "",
+      "city": "",
+      "status": "",
+      "breed": "",
+      "birth": "",
+      "address": "",
+      "township": "",
+      "id": 27
+    },
+    {
+      "name": "jelly ",
+      "pawrent": "mama",
+      "gender": "male",
+      "phone": "y45654",
+      "city": "",
+      "status": "",
+      "breed": "",
+      "birth": "2023-11-30T17:30:00.000Z",
+      "address": "no.456",
+      "township": "",
+      "id": 29
+    },
+    {
+      "name": "testing ",
+      "pawrent": "testing",
+      "gender": "male",
+      "phone": "3243",
+      "city": "tarmwae",
+      "status": "picky",
+      "breed": "golden",
+      "birth": "2023-12-07T17:30:00.000Z",
+      "address": "no.45",
+      "township": "yangon",
+      "id": 33
+    },
+    {
+      "name": "to do",
+      "pawrent": "test",
+      "gender": "male",
+      "phone": "21324",
+      "city": "tarmwae",
+      "status": "picky",
+      "breed": "spaniel",
+      "birth": "2023-12-01T17:30:00.000Z",
+      "address": "no.90",
+      "township": "Shan",
+      "id": 34
     }
   ]
 }

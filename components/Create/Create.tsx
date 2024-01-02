@@ -23,8 +23,34 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Create({props}) {
-  // console.log("create form", props);
+const statusOptions = [
+  { value: "all", label: "please choose status" },
+  { value: "allergy", label: "Allergy" },
+  { value: "picky", label: "Picky Eater" },
+];
+
+const breedOptions = [
+  { value: "all", label: "please choose breed" },
+  { value: "beagle", label: "Beagle" },
+  { value: "spaniel", label: "Spaniel" },
+  { value: "golden", label: "Golden Retriever" },
+];
+
+const cityOptions = [
+  { value: "all", label: "please choose city" },
+  { value: "yangon", label: "Yangon" },
+  { value: "insein", label: "Insein" },
+  { value: "tarmwae", label: "Tarmwae" },
+];
+
+const townshipOptions = [
+  { value: "all", label: "please choose township" },
+  { value: "yangon", label: "Yangon" },
+  { value: "mandalay", label: "Mandalay" },
+  { value: "Shan", label: "Shan" },
+];
+
+export default function Create({ props }) {
   const [name, setName] = useState("");
   const [pawrent, setPawrent] = useState("");
   const [gender, setGender] = useState("");
@@ -36,11 +62,8 @@ export default function Create({props}) {
   const [address, setAddress] = useState("");
   const [township, setTownship] = useState("");
   const [open, setOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
   const [message, setMessage] = useState("");
-
-  // const handleCancel = () => {
-  //   setOpen(false);
-  // };
 
   const handleDateChange = (date) => {
     setBirth(date);
@@ -72,7 +95,8 @@ export default function Create({props}) {
       })
       .then((data) => {
         setOpen(true);
-        setMessage("Saved successfully.");
+        setModalVisible(false);
+        setMessage("Patient is successfully created!");
       })
       .catch((err) => {
         console.log(err.message);
@@ -94,251 +118,287 @@ export default function Create({props}) {
     setOpen(false);
   };
 
+  const handleSnackbarClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <form onSubmit={submitHandler}>
-      <div className={styles.modalblock}>
-        <div className="">
-          <h1 className={styles.text}>Add new patient</h1>
-          <h2 className={styles.textone}>
-            Enter new patient information below
-          </h2>
-          <div className={styles.blockone}>
-            <div className={styles.blocktwo}>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Pet Name</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Pawrent</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={pawrent}
-                  onChange={(event) => setPawrent(event.target.value)}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <FormControl>
-                  <FormLabel id="demo-row-radio-buttons-group-label">
-                    Gender
-                  </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    value={gender}
-                    onChange={(event) => setGender(event.target.value)}
-                  >
-                    <FormControlLabel
-                      value="male"
-                      control={<Radio />}
-                      label="Male"
+    <>
+      {modalVisible && (
+        <form onSubmit={submitHandler}>
+          <div className={styles.modalblock}>
+            <div className="">
+              <h1 className={styles.text}>Add new patient</h1>
+              <h2 className={styles.textone}>
+                Enter new patient information below
+              </h2>
+              <div className={styles.blockone}>
+                <div className={styles.blocktwo}>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Pet Name</label>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      InputProps={{
+                        style: {
+                          borderRadius: "5px",
+                          height: "30px",
+                          width: "110%",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
                     />
-                    <FormControlLabel
-                      value="female"
-                      control={<Radio />}
-                      label="Female"
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Pawrent</label>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      InputProps={{
+                        style: {
+                          borderRadius: "5px",
+                          height: "30px",
+                          width: "110%",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      value={pawrent}
+                      onChange={(event) => setPawrent(event.target.value)}
                     />
-                  </RadioGroup>
-                </FormControl>
+                  </div>
+                  <div className={styles.inputone}>
+                    <FormControl>
+                      <FormLabel id="demo-row-radio-buttons-group-label">
+                        Gender
+                      </FormLabel>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        value={gender}
+                        onChange={(event) => setGender(event.target.value)}
+                      >
+                        <FormControlLabel
+                          value="male"
+                          control={<Radio />}
+                          label="Male"
+                        />
+                        <FormControlLabel
+                          value="female"
+                          control={<Radio />}
+                          label="Female"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Contact Phone No.</label>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      InputProps={{
+                        style: {
+                          borderRadius: "5px",
+                          height: "30px",
+                          width: "110%",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      value={phone}
+                      onChange={(event) => setPhone(event.target.value)}
+                    />
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>City</label>
+                    <TextField
+                      name="city"
+                      id="outlined-select-currency-native"
+                      select
+                      defaultValue="EUR"
+                      SelectProps={{
+                        native: true,
+                        sx: {
+                          height: "30px",
+                          width: "220px",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      helperText=""
+                      value={city}
+                      onChange={(event) => setCity(event.target.value)}
+                    >
+                      {cityOptions &&
+                        cityOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                    </TextField>
+                  </div>
+                </div>
+                <div className={styles.blockthree}>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Status</label>
+                    <TextField
+                      name="status"
+                      id="outlined-select-currency-native"
+                      select
+                      defaultValue="EUR"
+                      SelectProps={{
+                        native: true,
+                        sx: {
+                          height: "30px",
+                          width: "220px",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      helperText=""
+                      value={status}
+                      onChange={(event) => setStatus(event.target.value)}
+                    >
+                      {statusOptions &&
+                        statusOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                    </TextField>
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Breed</label>
+                    <TextField
+                      name="breed"
+                      id="outlined-select-currency-native"
+                      select
+                      defaultValue="EUR"
+                      SelectProps={{
+                        native: true,
+                        sx: {
+                          height: "30px",
+                          width: "220px",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      placeholder="please choose city"
+                      helperText=""
+                      value={breed}
+                      onChange={(event) => setBreed(event.target.value)}
+                    >
+                      {breedOptions &&
+                        breedOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                    </TextField>
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Date of Birth</label>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        value={birth}
+                        onChange={handleDateChange}
+                        sx={{
+                          width: "220px",
+                        }}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Address</label>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      InputProps={{
+                        style: {
+                          borderRadius: "5px",
+                          height: "30px",
+                          width: "110%",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      value={address}
+                      onChange={(event) => setAddress(event.target.value)}
+                    />
+                  </div>
+                  <div className={styles.inputone}>
+                    <label className={styles.label}>Township</label>
+                    <TextField
+                      name="township"
+                      id="outlined-select-currency-native"
+                      select
+                      defaultValue="EUR"
+                      SelectProps={{
+                        native: true,
+                        sx: {
+                          height: "30px",
+                          width: "220px",
+                          border: "1px solid #54bab9",
+                        },
+                      }}
+                      placeholder="please choose township"
+                      helperText=""
+                      value={township}
+                      onChange={(event) => setTownship(event.target.value)}
+                    >
+                      {townshipOptions &&
+                        townshipOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                    </TextField>
+                  </div>
+                </div>
               </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Contact Phone No.</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
+              <Stack
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "180px",
+                }}
+              >
+                <Button
+                  type="submit"
+                  variant="contained"
+                  onClick={handleClick}
+                  sx={{
+                    width: "100px",
+                    border: "1px solid #54BAB9",
+                    backgroundColor: "#54BAB9",
                   }}
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>City</label>
-                <TextField
-                  id="outlined-basic"
+                >
+                  Save
+                </Button>
+                <Button
+                  type="button"
                   variant="outlined"
-                  placeholder="please choose city"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
+                  onClick={() => setModalVisible(false)}
+                  sx={{
+                    color: "#000000",
+                    width: "100px",
+                    marginLeft: "10px",
                   }}
-                  value={city}
-                  onChange={(event) => setCity(event.target.value)}
-                />
-                <img
-                  src="/images/black_down.png"
-                  alt="logo"
-                  width={10}
-                  height={10}
-                  className={styles.image}
-                />
-              </div>
-            </div>
-            <div className={styles.blockthree}>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Status</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  placeholder="please choose status"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={status}
-                  onChange={(event) => setStatus(event.target.value)}
-                />
-                <img
-                  src="/images/black_down.png"
-                  alt="logo"
-                  width={10}
-                  height={10}
-                  className={styles.imageone}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Breed</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  placeholder="please choose breed"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={breed}
-                  onChange={(event) => setBreed(event.target.value)}
-                />
-                <img
-                  src="/images/black_down.png"
-                  alt="logo"
-                  width={10}
-                  height={10}
-                  className={styles.imagetwo}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>City</label>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker value={birth} onChange={handleDateChange} />
-                </LocalizationProvider>
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Address</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={address}
-                  onChange={(event) => setAddress(event.target.value)}
-                />
-              </div>
-              <div className={styles.inputone}>
-                <label className={styles.label}>Township</label>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  placeholder="please choose township"
-                  InputProps={{
-                    style: {
-                      borderRadius: "5px",
-                      height: "30px",
-                      width: "110%",
-                      border: "1px solid #54bab9",
-                    },
-                  }}
-                  value={township}
-                  onChange={(event) => setTownship(event.target.value)}
-                />
-                <img
-                  src="/images/black_down.png"
-                  alt="logo"
-                  width={10}
-                  height={10}
-                  className={styles.imagethree}
-                />
-              </div>
+                >
+                  Cancel
+                </Button>
+              </Stack>
             </div>
           </div>
-
-          <Stack spacing={2} sx={{ width: "100%", marginLeft: "170px" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={handleClick}
-              sx={{
-                width: "100px",
-                border: "1px solid #54bab9",
-                backgroundColor: "#54bab9",
-              }}
-            >
-              Save
-            </Button>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert
-                onClose={handleClose}
-                severity="success"
-                sx={{ width: "100%" }}
-              >
-                Patient is successfully created!
-              </Alert>
-            </Snackbar>
-          </Stack>
-          <Button
-            variant="outlined"
-            sx={{ color: "#000000", marginLeft: "280px" }}
-          >
-            Cancel
-          </Button>
-        </div>
-      </div>
-    </form>
+        </form>
+      )}
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
